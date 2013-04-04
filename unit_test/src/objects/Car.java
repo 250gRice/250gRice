@@ -4,6 +4,7 @@ public class Car implements INothing{
 	
 	private boolean is_started = false;
 	private boolean is_tankFull = true;
+	public int speed;
 	
 	public void startCar() {
 		if(is_started == false)
