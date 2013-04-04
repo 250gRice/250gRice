@@ -21,7 +21,7 @@ public class ItemTest extends TestCase {
 	}
 	
 	public void testXY() {
-		
+		assertEquals(true, true);
 	}
 
 }
