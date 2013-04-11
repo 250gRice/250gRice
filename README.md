@@ -1,4 +1,3 @@
 250gRice
 
-xhdhhaf
 ========
