@@ -10,6 +10,7 @@ public class Item {
 	private Units unit;
 	
 	
+	
 	public Item(String name, double value) {
 		this.name = name;
 		this.value = value;
@@ -28,13 +29,7 @@ public class Item {
 	public String getName() {
 		return name;
 	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
+	
 	public double getValue() {
 		return value;
 	}
@@ -50,11 +45,6 @@ public class Item {
 	}
 
 
-	public void setUnit(Units unit) {
-		this.unit = unit;
-	}
-
-
 	@Override 
 	public String toString() { 
 		double buf = Math.floor(this.value);
@@ -66,6 +56,20 @@ public class Item {
 			ret = String.format(Locale.US, "Name:%s , Value:%.2f, Unit:%s", this.name, this.value, this.unit.toString());
 		
 		return ret;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if ( this == obj) return true;
+		if(!(obj instanceof Item)) return false;
+		
+		Item item = (Item)obj;
+		
+		return (this.name == item.name) && (this.value == item.value) && (this.unit == item.unit);
+	}
+	
+	public void addValue(double toAdd) {
+		this.value += toAdd;
 	}
 	
 }

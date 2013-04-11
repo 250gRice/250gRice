@@ -34,4 +34,24 @@ public class ItemTest extends TestCase {
 		
 		assertEquals(toCompare, toCheck);
 	}
+	
+	public void testEquals() {
+		uut = new Item("toTest", 0.25, Units.GRAMM);
+		Item uut2 = new Item("toTest", 0.25, Units.GRAMM);
+		
+		
+		boolean areEqual = uut.equals(uut2);
+
+        assertTrue(areEqual);
+	}
+	
+	public void testEqualsFail() {
+		uut = new Item("toTest", 0.35, Units.GRAMM);
+		Item uut2 = new Item("toTest", 0.25, Units.GRAMM);
+		
+		boolean areEqual = uut.equals(uut2);
+
+        assertFalse(areEqual);
+	}
+	
 }
