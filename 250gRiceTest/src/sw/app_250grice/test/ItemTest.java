@@ -16,7 +16,7 @@ public class ItemTest extends TestCase {
 	}
 	
 	public void testName() {
-		uut = new Item("hallo hans");
+		uut = new Item("hallo hans", 5);
 		assertEquals("test if name is equal", uut.getName(), "hallo hans");
 	}
 	

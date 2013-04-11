@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		hans = new Item("hallo hans");
+		hans = new Item("hallo hans", 5);
 		TextView tv = (TextView)this.findViewById(R.id.text_view);
 		tv.setText(hans.getName());
 		
