@@ -1,6 +1,7 @@
 package sw.app_250grice.test;
 
 import sw.app_250grice.Item;
+import sw.app_250grice.Units;
 import junit.framework.TestCase;
 
 public class ItemTest extends TestCase {
@@ -15,15 +16,22 @@ public class ItemTest extends TestCase {
 		super.setUp();
 	}
 	
-	public void testName() {
-		uut = new Item("hallo hans", 5);
-		assertEquals("test if name is equal", uut.getName(), "hallo hans");
+
+	public void testToStringSimple() {
+		uut = new Item("toTest", 3);
+		
+		String toCompare = "Name:toTest , Value:3, Unit:NONE";
+		String toCheck = uut.toString();
+		
+		assertEquals(toCompare, toCheck);
 	}
 	
-	public void testXY() {
+	public void testToStringDecimal() {
+		uut = new Item("toTest", 0.75, Units.LITRE);
 		
-		boolean toTest = true;
-		assertEquals(toTest, true);
+		String toCompare = "Name:toTest , Value:0.75, Unit:LITRE";
+		String toCheck = uut.toString();
+		
+		assertEquals(toCompare, toCheck);
 	}
-
 }

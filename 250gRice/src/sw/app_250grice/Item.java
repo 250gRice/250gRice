@@ -1,5 +1,8 @@
 package sw.app_250grice;
 
+import java.util.Locale;
+
+
 public class Item {
 
 	private String name;
@@ -52,8 +55,17 @@ public class Item {
 	}
 
 
-	@Override public String toString() { 
-		return null;
+	@Override 
+	public String toString() { 
+		double buf = Math.floor(this.value);
+		String ret;
+		
+		if(buf == this.value)
+			ret = String.format(Locale.US, "Name:%s , Value:%.0f, Unit:%s", this.name, this.value, this.unit.toString());
+		else
+			ret = String.format(Locale.US, "Name:%s , Value:%.2f, Unit:%s", this.name, this.value, this.unit.toString());
+		
+		return ret;
 	}
 	
 }
