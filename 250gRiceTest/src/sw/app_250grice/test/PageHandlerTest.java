@@ -41,9 +41,9 @@ public class PageHandlerTest extends TestCase {
 		boolean toCheck = uut.containsPageByName("P1");
 		
 		assertTrue(toCheck);
-		
+		// mama
 	    toCheck = uut.containsPageByName("P6");
-		//
+		
 		assertFalse(toCheck);
 	}
 
