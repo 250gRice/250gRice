@@ -43,7 +43,7 @@ public class PageHandlerTest extends TestCase {
 		assertTrue(toCheck);
 		
 	    toCheck = uut.containsPageByName("P6");
-		
+		//
 		assertFalse(toCheck);
 	}
 
