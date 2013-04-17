@@ -35,6 +35,15 @@ public class ItemTest extends TestCase {
 		assertEquals(toCompare, toCheck);
 	}
 	
+	public void testToString3Decimal() {
+		uut = new Item("toTest", 0.237, Units.LITRE);
+		
+		String toCompare = "Name:toTest , Value:0.24, Unit:LITRE";
+		String toCheck = uut.toString();
+		
+		assertEquals(toCompare, toCheck);
+	}
+	
 	public void testEquals() {
 		uut = new Item("toTest", 0.25, Units.GRAMM);
 		Item uut2 = new Item("toTest", 0.25, Units.GRAMM);
