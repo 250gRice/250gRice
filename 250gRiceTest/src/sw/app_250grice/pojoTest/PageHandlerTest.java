@@ -107,6 +107,10 @@ public class PageHandlerTest {
 	@Test
 	public void testRenamePageByName() throws PageNotFoundException, PageNameAlreadyExistsException {
 		uut.renamePageByName("P1", "PX");
+		
+		List<Page> pages = uut.getPages();
+		String toCheck = pages.get(0).getName();
+		assertEquals(toCheck, "PX");
 	}
 	
 	@Test
