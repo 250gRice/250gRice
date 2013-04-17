@@ -51,7 +51,25 @@ public class Page {
 		
 		Page page = (Page)obj;
 		
-		return (this.name == page.name);
+		boolean ret = true;
+		
+		List<Item> thisItems = this.getItems();
+		List<Item> pageItems = page.getItems();
+		
+		ret = (this.name == page.name) && (thisItems.size() == pageItems.size());
+		
+		if(!ret)
+			return ret;
+		
+		Iterator<Item> thisIt = thisItems.iterator();
+		Iterator<Item> pageIt = pageItems.iterator();
+		
+		while(thisIt.hasNext())
+		{
+			ret &= thisIt.next().equals(pageIt.next());
+		}
+		
+		return ret;
 	}
 	
 	@Override
