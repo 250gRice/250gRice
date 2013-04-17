@@ -43,6 +43,12 @@ public class Item {
 	public Units getUnit() {
 		return unit;
 	}
+	
+	public Item clone() {
+		Item i = new Item(this.name, this.value, this.unit);
+		
+		return i;
+	}
 
 
 	@Override 

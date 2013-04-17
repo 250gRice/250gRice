@@ -63,4 +63,16 @@ public class ItemTest extends TestCase {
         assertFalse(areEqual);
 	}
 	
+	public void testClone() {
+		uut = new Item("toTest", 0.25, Units.GRAMM);
+		
+		Item deepCopy = uut.clone();
+		
+		deepCopy.setValue(0.45);
+		
+		boolean areEqual = uut.equals(deepCopy);
+		
+		assertFalse(areEqual);
+	}
+	
 }

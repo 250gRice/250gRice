@@ -96,4 +96,22 @@ public class PageTest extends TestCase {
 		assertEquals(toCompare, toCheck);
 		
 	}
+	
+	public void testClone() {
+		Page deepCopy = uut.clone();
+		
+		Item toCheck = deepCopy.getItemByNameAndUnit("i1", Units.NONE);
+		
+		toCheck.addValue(2);
+		
+		Item toCompare = uut.getItemByNameAndUnit("i1", Units.NONE);
+		
+		boolean areEqual = toCompare.equals(toCheck);
+		
+		assertFalse(areEqual);
+		
+		/*areEqual = deepCopy.equals(uut);
+		
+		assertFalse(areEqual);*/
+	}
 }

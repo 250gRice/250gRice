@@ -34,6 +34,32 @@ public class PageHandler {
 			
 		return true;
 	}
+
+	public List<Page> getPages() {
+		List<Page> ret = new ArrayList<Page>();
+		
+		for (Page page : pages) {
+			ret.add(page.clone());
+		}
+		
+		return ret;
+	}
+	
+	public boolean deletePageByName(String name) {
+		Page toSearch = getPageByName(name);
+		
+		if(toSearch == null)
+			return false;
+		
+		this.pages.remove(toSearch);
+		return true;
+	}
+	
+	public void dispose() {
+		pages.clear();
+		pages = null;
+		singletonPageHandler = null;
+	}
 	
 	
 	private Page getPageByName(String name) {

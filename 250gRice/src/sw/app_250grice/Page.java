@@ -65,5 +65,25 @@ public class Page {
 		return name;
 	}
 	
+	public List<Item> getItems() {
+		List<Item> ret = new ArrayList<Item>();
+		
+		for (Item item : items) {
+			ret.add(item.clone());
+		}
+		
+		return ret;
+	}
+	
+	public Page clone() {
+		Page p = new Page(this.name);
+
+		for (Item item : items) {
+			p.addItem(item.clone());
+		}
+		
+		return p;
+	}
+	
 
 }
