@@ -81,5 +81,4 @@ public class ItemTest extends TestCase {
 		
 		assertFalse(areEqual);
 	}
-	
 }

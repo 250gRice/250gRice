@@ -1,7 +1,10 @@
 package sw.app_250grice.pojoTest;
 
 import static org.junit.Assert.*;
+
+
 import sw.app_250grice.Item;
+import sw.app_250grice.ItemNotFoundException;
 import sw.app_250grice.Page;
 import sw.app_250grice.Units;
 import org.junit.After;
@@ -31,7 +34,7 @@ public class PageTest {
 	}
 	
 	@Test
-	public void testAddSameItemNameAndUnit() {
+	public void testAddSameItemNameAndUnit() throws ItemNotFoundException{
 		Item toCompare = new Item("i1", 6.5);
 		Item toAdd = new Item("i1", 2);
 
@@ -43,7 +46,7 @@ public class PageTest {
 	}
 	
 	@Test
-	public void testAddSameItemNameOtherUnit() {
+	public void testAddSameItemNameOtherUnit() throws ItemNotFoundException{
 		Item toCompare = new Item("i1", 2, Units.LITRE);
 		Item toAdd = new Item("i1", 2, Units.LITRE);
 
@@ -60,20 +63,29 @@ public class PageTest {
 	}
 	
 	@Test
-	public void testRemoveItem() {
+	public void testRemoveItem() throws ItemNotFoundException{
 		Item toDelete = new Item("i6", 3.4, Units.GRAMM);
 		
 		uut.addItem(toDelete);
 		
 		uut.removeItemByNameAndUnit(toDelete.getName(), toDelete.getUnit());
-		
-		Item toCheck = uut.getItemByNameAndUnit(toDelete.getName(), toDelete.getUnit());
-		
-		assertNull(toCheck);
 	}
 	
+	@Test(expected=ItemNotFoundException.class)
+	public void testGetItemByNameAndUnitThrows() throws ItemNotFoundException{
+		
+	uut.getItemByNameAndUnit("i6", Units.NONE);
+	}
+	
+	@Test(expected=ItemNotFoundException.class)
+	public void testtestRemoveItemThrows() throws ItemNotFoundException{
+		
+	uut.removeItemByNameAndUnit("i6", Units.NONE);
+	}
+	
+	
 	@Test
-	public void testAddItemSetNullAfterwards() {
+	public void testAddItemSetNullAfterwards() throws ItemNotFoundException{
 		Item toAdd  = new Item("i6", 3);
 		String toSearchName = toAdd.getName();
 		Units toSearchUnit = toAdd.getUnit();
@@ -115,7 +127,7 @@ public class PageTest {
 	}
 	
 	@Test
-	public void testClone() {
+	public void testClone() throws ItemNotFoundException{
 		Page deepCopy = uut.clone();
 		
 		Item toCheck = deepCopy.getItemByNameAndUnit("i1", Units.NONE);

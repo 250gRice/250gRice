@@ -18,20 +18,28 @@ public class PageHandler {
 		return singletonPageHandler;
 	}
 	
-	public boolean addPageBlank(String name) {
-		Page toSearch = getPageByName(name);
-		if(toSearch != null)
-			return false;
-		
-		pages.add(new Page(name));		
-		return true; 		
+	public void addPageBlank(String name) throws PageNameAlreadyExistsException{
+		if(containsPageByName(name))
+			throw new PageNameAlreadyExistsException();
+		else
+			pages.add(new Page(name));			
+	}
+	
+	public void addPageExisting(Page page) throws PageNameAlreadyExistsException{
+		if(containsPageByName(page.name))
+			throw new PageNameAlreadyExistsException();
+		else
+			pages.add(page);			
 	}
 	
 	public boolean containsPageByName(String name) {
-		Page toSearch = getPageByName(name);
-		if(toSearch == null)
+		try {
+		getPageByName(name);
+		}
+		catch (PageNotFoundException ex) {
 			return false;
-			
+		}
+
 		return true;
 	}
 
@@ -45,14 +53,14 @@ public class PageHandler {
 		return ret;
 	}
 	
-	public boolean deletePageByName(String name) {
-		Page toSearch = getPageByName(name);
-		
-		if(toSearch == null)
-			return false;
-		
-		this.pages.remove(toSearch);
-		return true;
+	public void deletePageByName(String name) throws PageNotFoundException{
+		try {
+			Page toSearch = getPageByName(name);
+			this.pages.remove(toSearch);
+		}
+		catch (PageNotFoundException ex) {
+			throw(ex);
+		}
 	}
 	
 	public void dispose() {
@@ -62,12 +70,29 @@ public class PageHandler {
 	}
 	
 	
-	private Page getPageByName(String name) {
+	private Page getPageByName(String name) throws PageNotFoundException{
 		for(Page page : pages)
 			if(page.getName() == name)
 				return page;
 			
-		return null;
+		throw(new PageNotFoundException());
+	}
+	
+	public void renamePageByName(String oldName, String newName) throws PageNotFoundException, PageNameAlreadyExistsException {
+		Page p;
+		
+		try {
+			p = this.getPageByName(oldName);
+		}
+		catch (PageNotFoundException ex) {
+			throw(ex);
+		}
+		
+		if (this.containsPageByName(newName))
+			throw(new PageNameAlreadyExistsException());
+		
+		p.setName(newName);
+
 	}
 	
 }

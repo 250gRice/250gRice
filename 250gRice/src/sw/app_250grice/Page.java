@@ -16,32 +16,30 @@ public class Page {
 	}
 	
 	public void addItem(Item toAdd) {
-		Item toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
-		
-		if(toSearch == null)
+		Item toSearch = null;
+		try {
+			toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
+		} catch (ItemNotFoundException e) {
 			items.add(toAdd);
-		else
-			toSearch.addValue(toAdd.getValue());
+			return;
+		}
+		
+		toSearch.addValue(toAdd.getValue());
 	}
 	
-	public Item getItemByNameAndUnit(String name, Units unit){
+	public Item getItemByNameAndUnit(String name, Units unit) throws ItemNotFoundException{
 	    for(Item item : items)
 	        if(item.getName() == name && item.getUnit() == unit)
 	            return item;
 		
-	    return null;
+	    throw(new ItemNotFoundException());
 	}
 	
-	public void removeItemByNameAndUnit(String name, Units unit) {
-		Iterator<Item> itr = items.iterator();
-		Item itrItem;
-		while(itr.hasNext()) {
-			itrItem = itr.next();
-			if(itrItem.getName() == name && itrItem.getUnit() == unit){
-				itr.remove();
-				return;
-			}
-		}
+	public void removeItemByNameAndUnit(String name, Units unit) throws ItemNotFoundException{
+		
+		Item i = getItemByNameAndUnit(name, unit);
+		
+		items.remove(i);
 	}
 	
 	@Override
@@ -50,26 +48,18 @@ public class Page {
 		if(!(obj instanceof Page)) return false;
 		
 		Page page = (Page)obj;
+
+		if(!((this.name == page.name) && (this.items.size() == page.items.size())))
+			return false;
 		
-		boolean ret = true;
-		
-		List<Item> thisItems = this.getItems();
-		List<Item> pageItems = page.getItems();
-		
-		ret = (this.name == page.name) && (thisItems.size() == pageItems.size());
-		
-		if(!ret)
-			return ret;
-		
-		Iterator<Item> thisIt = thisItems.iterator();
-		Iterator<Item> pageIt = pageItems.iterator();
+		Iterator<Item> thisIt = this.items.iterator();
+		Iterator<Item> pageIt = page.items.iterator();
 		
 		while(thisIt.hasNext())
-		{
-			ret &= thisIt.next().equals(pageIt.next());
-		}
+			if (!thisIt.next().equals(pageIt.next()))
+				return false;
 		
-		return ret;
+		return true;
 	}
 	
 	@Override
@@ -81,6 +71,10 @@ public class Page {
 
 	public String getName() {
 		return name;
+	}
+	
+	public void setName(String value) {
+		this.name = value;
 	}
 	
 	public List<Item> getItems() {
@@ -96,9 +90,7 @@ public class Page {
 	public Page clone() {
 		Page p = new Page(this.name);
 
-		for (Item item : items) {
-			p.addItem(item.clone());
-		}
+		p.items = getItems();
 		
 		return p;
 	}
