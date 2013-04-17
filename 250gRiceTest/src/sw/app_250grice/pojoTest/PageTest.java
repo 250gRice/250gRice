@@ -1,20 +1,22 @@
-package sw.app_250grice.test;
+package sw.app_250grice.pojoTest;
 
+import static org.junit.Assert.*;
 import sw.app_250grice.Item;
 import sw.app_250grice.Page;
 import sw.app_250grice.Units;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class PageTest extends TestCase {
+public class PageTest {
 	
 	Page uut;
 
-	public PageTest(String name) {
-		super(name);
+	public PageTest() {
 	}
-
-	protected void setUp() throws Exception {
-		super.setUp();
+	
+	@Before
+	public void setUp() throws Exception {
 		uut = new Page("Page1");
 		uut.addItem(new Item("i1", 4.5));
 		uut.addItem(new Item("i2", 3.333, Units.LITRE));
@@ -23,11 +25,12 @@ public class PageTest extends TestCase {
 		uut.addItem(new Item("i5", 25, Units.PIECE));
 	}
 
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() throws Exception {
 		uut = null;
 	}
 	
+	@Test
 	public void testAddSameItemNameAndUnit() {
 		Item toCompare = new Item("i1", 6.5);
 		Item toAdd = new Item("i1", 2);
@@ -39,6 +42,7 @@ public class PageTest extends TestCase {
 		assertEquals(toCompare, toCheck);
 	}
 	
+	@Test
 	public void testAddSameItemNameOtherUnit() {
 		Item toCompare = new Item("i1", 2, Units.LITRE);
 		Item toAdd = new Item("i1", 2, Units.LITRE);
@@ -55,6 +59,7 @@ public class PageTest extends TestCase {
 		assertEquals(toCompare, toCheck);
 	}
 	
+	@Test
 	public void testRemoveItem() {
 		Item toDelete = new Item("i6", 3.4, Units.GRAMM);
 		
@@ -67,6 +72,7 @@ public class PageTest extends TestCase {
 		assertNull(toCheck);
 	}
 	
+	@Test
 	public void testAddItemSetNullAfterwards() {
 		Item toAdd  = new Item("i6", 3);
 		String toSearchName = toAdd.getName();
@@ -83,12 +89,14 @@ public class PageTest extends TestCase {
 		assertEquals(toCheck.getUnit(), toSearchUnit);
 	}	
 
+	@Test
 	public void testEquality() {
 		Page uut2 = new Page("Page1");
 		
 		assertEquals(uut, uut2);
 	}
 	
+	@Test
 	public void testToString() {
 		String toCompare = "Name:Page1 , Count:5";
 		String toCheck = uut.toString();
@@ -97,6 +105,7 @@ public class PageTest extends TestCase {
 		
 	}
 	
+	@Test
 	public void testClone() {
 		Page deepCopy = uut.clone();
 		

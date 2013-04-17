@@ -1,4 +1,4 @@
-package sw.app_250grice.test;
+package sw.app_250grice.androidTest;
 
 import sw.app_250grice.R;
 

@@ -1,4 +1,6 @@
-package sw.app_250grice.test;
+package sw.app_250grice.pojoTest;
+
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -6,19 +8,20 @@ import sw.app_250grice.Item;
 import sw.app_250grice.Page;
 import sw.app_250grice.PageHandler;
 import sw.app_250grice.Units;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class PageHandlerTest extends TestCase {
+public class PageHandlerTest {
 	
 	PageHandler uut;
 
-	public PageHandlerTest(String name) {
-		super(name);
+	public PageHandlerTest() {
 	}
-
-	protected void setUp() throws Exception {
-		super.setUp();
-		
+	
+	@Before
+	public void setUp() throws Exception {
+	
 		uut = PageHandler.getPageHandler();
 		uut.addPageBlank("P1");
 		uut.addPageBlank("P2");
@@ -27,11 +30,12 @@ public class PageHandlerTest extends TestCase {
 		uut.addPageBlank("P5");
 	}
 
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() throws Exception {
 		uut.dispose();
 	}
 	
+	@Test
 	public void testAddExistingPage() {
 		boolean toCheck = uut.addPageBlank("P1");
 		
@@ -42,6 +46,7 @@ public class PageHandlerTest extends TestCase {
 		assertTrue(toCheck);
 	}
 	
+	@Test
 	public void testContainsPageByName() {
 		boolean toCheck = uut.containsPageByName("P1");
 		
@@ -52,6 +57,7 @@ public class PageHandlerTest extends TestCase {
 		assertFalse(toCheck);
 	}
 	
+	@Test
 	public void testDeletePageByName() {
 		boolean toCheck = uut.deletePageByName("P1");
 		
@@ -62,12 +68,14 @@ public class PageHandlerTest extends TestCase {
 		assertFalse(toCheck);
 	}
 	
+	@Test
 	public void testDeletePageByNameNothingDeleted() {
 		boolean toCheck = uut.deletePageByName("P6");
 		
 		assertFalse(toCheck);
 	}
 	
+	@Test
 	public void testGetPages() {
 		List<Page> pageList = uut.getPages();
 		
