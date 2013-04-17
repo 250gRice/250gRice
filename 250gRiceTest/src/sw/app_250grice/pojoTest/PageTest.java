@@ -90,8 +90,17 @@ public class PageTest {
 	}	
 
 	@Test
-	public void testEquality() {
+	public void testEqualityFail() {
 		Page uut2 = new Page("Page1");
+		
+		boolean areEqual = uut.equals(uut2);
+		
+		assertFalse(areEqual);
+	}
+	
+	@Test
+	public void testEquality() {
+		Page uut2 = uut.clone();
 		
 		assertEquals(uut, uut2);
 	}
@@ -119,8 +128,8 @@ public class PageTest {
 		
 		assertFalse(areEqual);
 		
-		/*areEqual = deepCopy.equals(uut);
+		areEqual = deepCopy.equals(uut);
 		
-		assertFalse(areEqual);*/
+		assertFalse(areEqual);
 	}
 }
