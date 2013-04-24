@@ -21,7 +21,7 @@ public class Page {
 		try {
 			toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
 		} catch (ItemNotFoundException e) {
-			items.add(toAdd.clone());
+			items.add(toAdd.clone()123);
 			return;
 		}
 		
