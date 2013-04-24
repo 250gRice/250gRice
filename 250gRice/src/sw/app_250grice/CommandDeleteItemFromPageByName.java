@@ -12,7 +12,7 @@ public class CommandDeleteItemFromPageByName implements ICommand {
 		if(!pageHandler.containsPageByName(pageName)) 
 			throw new PageNotFoundException();
 		
-		if(!pageHandler.constainsItemInPageByNameAndUnit(itemName, unit, pageName))
+		if(!pageHandler.containsItemInPageByNameAndUnit(itemName, unit, pageName))
 			throw new ItemNotFoundException();
 		
 		this.itemName = itemName;
@@ -23,7 +23,7 @@ public class CommandDeleteItemFromPageByName implements ICommand {
 
 	@Override
 	public void execute() {
-		pageHandler.deleteItemFromPageByName(itemName, unit, pageName);
+		pageHandler.removeItemFromPageByName(itemName, unit, pageName);
 	}
 
 }
