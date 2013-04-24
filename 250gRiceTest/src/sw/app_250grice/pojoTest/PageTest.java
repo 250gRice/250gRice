@@ -144,4 +144,28 @@ public class PageTest {
 		
 		assertFalse(areEqual);
 	}
+	
+	@Test
+	public void testAddAndModifyItemToTwoLists() throws ItemNotFoundException{
+		Page uut2 = uut.clone();
+		
+		Item toAdd = new Item("Rice", 20);
+		
+		Item toCheckuut = new Item("Rice", 60);
+		Item toCheckuut2 = new Item("Rice", 40);
+		
+		uut.addItem(toAdd);
+		uut.addItem(toAdd);
+		uut2.addItem(toAdd);
+		uut.addItem(toAdd);
+		uut2.addItem(toAdd);
+		
+        String name = "Rice";
+        Units unit = Units.NONE;
+		
+		assertEquals(toCheckuut, uut.getItemByNameAndUnit(name, unit));
+		assertEquals(toCheckuut2, uut2.getItemByNameAndUnit(name, unit));
+		
+	}
+	
 }
