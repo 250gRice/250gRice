@@ -54,13 +54,13 @@ public class PageHandler {
 	}
 	
 	public void deletePageByName(String name) throws PageNotFoundException{
-		try {
+	//	try {
 			Page toSearch = getPageByName(name);
 			this.pages.remove(toSearch);
-		}
+		/*}
 		catch (PageNotFoundException ex) {
 			throw(ex);
-		}
+		}*/
 	}
 	
 	public void dispose() {
@@ -79,15 +79,15 @@ public class PageHandler {
 	}
 	
 	public void renamePageByName(String oldName, String newName) throws PageNotFoundException, PageNameAlreadyExistsException {
-		Page p;
-		
+		Page p = this.getPageByName(oldName);
+		/*
 		try {
 			p = this.getPageByName(oldName);
 		}
 		catch (PageNotFoundException ex) {
 			throw(ex);
-		}
-		
+		}*/
+
 		if (this.containsPageByName(newName))
 			throw(new PageNameAlreadyExistsException());
 		

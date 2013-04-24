@@ -18,12 +18,7 @@ public class MainActivity extends Activity {
 		TextView tv = (TextView)this.findViewById(R.id.text_view);
 		tv.setText(hans.getName());
 		
-		/*// Create the text view
-	    TextView textView = new TextView(this);
-	    textView.setTextSize(40);
-	    textView.setText(hans);
-	    
-	    setContentView(textView);*/
+		// do cool stuff
 
 	}
 
