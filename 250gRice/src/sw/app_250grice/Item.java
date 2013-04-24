@@ -2,27 +2,48 @@ package sw.app_250grice;
 
 import java.util.Locale;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+@DatabaseTable
 public class Item {
-
+	
+	public static final String PAGE_FIELD_NAME = "page"; 
+	
+	@DatabaseField(generatedId = true, columnName = "id")
+	private int id;
+	
+	@DatabaseField(columnName = "name")
 	private String name;
+	
+	@DatabaseField(canBeNull = false, columnName = "value")
 	private double value;
+	
+	@DatabaseField(canBeNull = false, columnName = "unit")
 	private Units unit;
+		
+	@DatabaseField(foreign = true, canBeNull = false, columnName = PAGE_FIELD_NAME)
+	private Page page = null;
+
 	
+	public Item() {
+
+	}	
 	
-	
-	public Item(String name, double value) {
+	public Item(String name, double value, Page page) {
 		this.name = name;
 		this.value = value;
 		this.unit = Units.NONE;
+		this.page = page;
 	}
 	
 
-	public Item(String name, double value, Units unit) {
+	public Item(String name, double value, Units unit, Page page) {
 		super();
 		this.name = name;
 		this.value = value;
 		this.unit = unit;
+		this.page = page;
 	}
 
 
@@ -45,7 +66,7 @@ public class Item {
 	}
 	
 	public Item clone() {
-		Item i = new Item(this.name, this.value, this.unit);
+		Item i = new Item(this.name, this.value, this.unit, this.page);
 		
 		return i;
 	}
@@ -71,7 +92,7 @@ public class Item {
 		
 		Item item = (Item)obj;
 		
-		return (this.name == item.name) && (this.value == item.value) && (this.unit == item.unit);
+		return (this.name == item.name) && (this.value == item.value) && (this.unit == item.unit) && (this.page == item.page);
 	}
 	
 	public void addValue(double toAdd) {

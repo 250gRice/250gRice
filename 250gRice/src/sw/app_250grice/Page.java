@@ -5,10 +5,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable
 public class Page {
 	
+    @DatabaseField(id = true)
 	String name;
+    
 	List<Item> items;
+	
+	
+	public Page() {
+		
+	}
 	
 	public Page(String name) {
 		items = new ArrayList<Item>();
