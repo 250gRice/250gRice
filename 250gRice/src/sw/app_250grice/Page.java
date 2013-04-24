@@ -28,6 +28,10 @@ public class Page {
 		toSearch.addValue(toAdd.getValue());
 	}
 	
+	public void doNothin(){
+	
+	}
+	
 	public Item getItemByNameAndUnit(String name, Units unit) throws ItemNotFoundException{
 	    for(Item item : items)
 	        if(item.getName() == name && item.getUnit() == unit)
