@@ -20,15 +20,11 @@ public class Page {
 		try {
 			toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
 		} catch (ItemNotFoundException e) {
-			items.add(toAdd.clone()123);
+			items.add(toAdd.clone());
 			return;
 		}
 		
 		toSearch.addValue(toAdd.getValue());
-	}
-	
-	public void doNothin(){
-		// did something useful
 	}
 	
 	public Item getItemByNameAndUnit(String name, Units unit) throws ItemNotFoundException{
