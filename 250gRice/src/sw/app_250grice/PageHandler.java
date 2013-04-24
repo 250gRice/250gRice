@@ -63,6 +63,20 @@ public class PageHandler {
 		}*/
 	}
 	
+	public void addItemToPageByName(Item toAdd, String pageName) throws PageNotFoundException{
+		getPageByName(pageName).addItem(toAdd);
+	}
+	
+	public void deleteItemFromPageByName(String name, Units unit, String pageName) throws PageNotFoundException, ItemNotFoundException{
+		Page toSearch = getPageByName(pageName);
+		toSearch.removeItemByNameAndUnit(name, unit);
+	}
+	
+	public List<Item> getItemsFromPageByName(String pageName) throws PageNotFoundException{
+		return getPageByName(pageName).getItems();
+	}
+	
+	
 	public void dispose() {
 		pages.clear();
 		pages = null;
@@ -92,7 +106,6 @@ public class PageHandler {
 			throw(new PageNameAlreadyExistsException());
 		
 		p.setName(newName);
-
 	}
 	
 }

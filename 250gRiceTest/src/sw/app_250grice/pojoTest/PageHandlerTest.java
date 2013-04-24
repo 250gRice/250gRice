@@ -129,7 +129,14 @@ public class PageHandlerTest {
 		p.addItem(i);
 		
 		uut.addPageExisting(p);
+	}
+
+	@Test
+	public void testDeleteItemFromPageByName() throws PageNotFoundException, ItemNotFoundException {
+		Item i = new Item("i1", 2);
+		uut.addItemToPageByName(i, "P1");
 		
+		uut.deleteItemFromPageByName("i1", Units.NONE, "P1");
 	}
 
 }
