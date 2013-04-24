@@ -71,21 +71,21 @@ public class PageTest {
 		uut.removeItemByNameAndUnit(toDelete.getName(), toDelete.getUnit());
 	}
 	
-	@Test(expected=ItemNotFoundException.class)
-	public void testGetItemByNameAndUnitThrows() throws ItemNotFoundException{
-		
-	uut.getItemByNameAndUnit("i6", Units.NONE);
+	public void testGetItemByNameAndUnitThrows() {
+	  Item i = null;
+	 i = uut.getItemByNameAndUnit("i6", Units.NONE);
+	 
+	 assertNull(i);
 	}
 	
-	@Test(expected=ItemNotFoundException.class)
-	public void testtestRemoveItemThrows() throws ItemNotFoundException{
-		
+	@Test
+	public void testRemoveItemNothingDeleted() {
 	uut.removeItemByNameAndUnit("i6", Units.NONE);
 	}
 	
 	
 	@Test
-	public void testAddItemSetNullAfterwards() throws ItemNotFoundException{
+	public void testAddItemSetNullAfterwards() {
 		Item toAdd  = new Item("i6", 3);
 		String toSearchName = toAdd.getName();
 		Units toSearchUnit = toAdd.getUnit();
@@ -166,6 +166,16 @@ public class PageTest {
 		assertEquals(toCheckuut, uut.getItemByNameAndUnit(name, unit));
 		assertEquals(toCheckuut2, uut2.getItemByNameAndUnit(name, unit));
 		
+	}
+	
+	@Test
+    public void testContainsItemByNameAndUnit() {
+		
+		boolean found;
+		found = uut.containsItemByNameAndUnit("i1", Units.NONE);
+		assertTrue(found);
+		found = uut.containsItemByNameAndUnit("i7", Units.LITRE);
+		assertFalse(found);
 	}
 	
 }

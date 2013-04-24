@@ -38,8 +38,8 @@ public class PageHandlerTest {
 		uut.dispose();
 	}
 	
-	@Test(expected=PageNameAlreadyExistsException.class)
-	public void testAddExistingPage() throws PageNameAlreadyExistsException{
+	@Test
+	public void testAddExistingPage() {
 		uut.addPageBlank("P1");
 	}
 	
@@ -56,26 +56,21 @@ public class PageHandlerTest {
 	
 	@Test
 	public void testDeletePageByName() {
-		try {
 			uut.deletePageByName("P1");
-		} catch (PageNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		boolean toCheck = uut.containsPageByName("P1");
 		
 		assertFalse(toCheck);
 	}
 	
-	@Test(expected=PageNotFoundException.class)
-	public void testDeletePageByNameNonExisting() throws PageNotFoundException {
+	@Test
+	public void testDeletePageByNameNonExisting() {
 		uut.deletePageByName("P6");
 
 	}
 	
-	@Test(expected=ItemNotFoundException.class)
-	public void testGetPages() throws ItemNotFoundException{
+	@Test
+	public void testGetPages() {
 		List<Page> pageList = uut.getPages();
 		
 		Page page = pageList.get(0);
@@ -89,23 +84,23 @@ public class PageHandlerTest {
 		page = pageList.get(0);
 		assertTrue(toCheck);
 		
-		page.getItemByNameAndUnit("I1", Units.NONE);
-	}
-	
-	@Test(expected=PageNotFoundException.class)
-	public void testRenamePageByNameNotFound() throws PageNotFoundException, PageNameAlreadyExistsException {
-		uut.renamePageByName("PX", "PY");
-
-	}
-	
-	@Test(expected=PageNameAlreadyExistsException.class)
-	public void testRenamePageByNameNameAlreadyExists() throws PageNotFoundException, PageNameAlreadyExistsException {
-		uut.renamePageByName("P1", "P2");
-
+		item = page.getItemByNameAndUnit("I1", Units.NONE);
+		
+		assertNull(item);
 	}
 	
 	@Test
-	public void testRenamePageByName() throws PageNotFoundException, PageNameAlreadyExistsException {
+	public void testRenamePageByNameNotFound() {
+		uut.renamePageByName("PX", "PY");
+	}
+	
+	@Test
+	public void testRenamePageByNameNameAlreadyExists() {
+		uut.renamePageByName("P1", "P2");
+	}
+	
+	@Test
+	public void testRenamePageByName() {
 		uut.renamePageByName("P1", "PX");
 		
 		List<Page> pages = uut.getPages();
@@ -114,7 +109,7 @@ public class PageHandlerTest {
 	}
 	
 	@Test
-	public void testAddPageExisting() throws PageNameAlreadyExistsException {
+	public void testAddPageExisting() {
 		Page p = new Page("P6");
 		Item i = new Item("i1", 2);
 		p.addItem(i);
@@ -122,8 +117,8 @@ public class PageHandlerTest {
 		uut.addPageExisting(p);
 	}
 	
-	@Test(expected=PageNameAlreadyExistsException.class)
-	public void testAddPageExistingThrow() throws PageNameAlreadyExistsException {
+	@Test
+	public void testAddPageExistingThrow() {
 		Page p = new Page("P1");
 		Item i = new Item("i1", 2);
 		p.addItem(i);
@@ -132,11 +127,25 @@ public class PageHandlerTest {
 	}
 
 	@Test
-	public void testDeleteItemFromPageByName() throws PageNotFoundException, ItemNotFoundException {
+	public void testDeleteItemFromPageByName() {
 		Item i = new Item("i1", 2);
 		uut.addItemToPageByName(i, "P1");
 		
-		uut.deleteItemFromPageByName("i1", Units.NONE, "P1");
+		uut.removeItemFromPageByName("i1", Units.NONE, "P1");
+	}
+	
+	@Test
+    public void testContainsItemInPageByNameAndUnit() {
+		Item i = new Item("i1", 2);
+		uut.addItemToPageByName(i, "P1");
+		
+		boolean found;
+		found = uut.containsItemInPageByNameAndUnit("i1", Units.NONE, "P1"); //found
+		assertTrue(found);
+		found = uut.containsItemInPageByNameAndUnit("i7", Units.LITRE, "P1"); //item not exists
+		assertFalse(found);
+		found = uut.containsItemInPageByNameAndUnit("i1", Units.NONE, "PX"); //page not exists
+		assertFalse(found);
 	}
 
 }

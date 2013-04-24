@@ -18,17 +18,13 @@ public class PageHandler {
 		return singletonPageHandler;
 	}
 	
-	public void addPageBlank(String name) throws PageNameAlreadyExistsException{
-		if(containsPageByName(name))
-			throw new PageNameAlreadyExistsException();
-		else
+	public void addPageBlank(String name) {
+		if(!containsPageByName(name))
 			pages.add(new Page(name));			
 	}
 	
-	public void addPageExisting(Page page) throws PageNameAlreadyExistsException{
-		if(containsPageByName(page.name))
-			throw new PageNameAlreadyExistsException();
-		else
+	public void addPageExisting(Page page) {
+		if(!containsPageByName(page.name))
 			pages.add(page);			
 	}
 	
@@ -53,27 +49,38 @@ public class PageHandler {
 		return ret;
 	}
 	
-	public void deletePageByName(String name) throws PageNotFoundException{
-	//	try {
+	public void deletePageByName(String name) {
+		try {
 			Page toSearch = getPageByName(name);
 			this.pages.remove(toSearch);
-		/*}
-		catch (PageNotFoundException ex) {
-			throw(ex);
-		}*/
+		}
+		catch (PageNotFoundException ex) { /*silent*/ }
 	}
 	
-	public void addItemToPageByName(Item toAdd, String pageName) throws PageNotFoundException{
+	public void addItemToPageByName(Item toAdd, String pageName) {
+		try {
 		getPageByName(pageName).addItem(toAdd);
+		}
+		catch (PageNotFoundException ex) { /*silent*/ }
 	}
 	
-	public void deleteItemFromPageByName(String name, Units unit, String pageName) throws PageNotFoundException, ItemNotFoundException{
+	public void removeItemFromPageByName(String name, Units unit, String pageName) {
+		try {
 		Page toSearch = getPageByName(pageName);
 		toSearch.removeItemByNameAndUnit(name, unit);
+		}
+		catch (PageNotFoundException ex) { /*silent*/ }
+		
 	}
 	
-	public List<Item> getItemsFromPageByName(String pageName) throws PageNotFoundException{
-		return getPageByName(pageName).getItems();
+	public List<Item> getItemsFromPageByName(String pageName) {
+		List<Item> ret = new ArrayList<Item>();
+		try {
+			ret = getPageByName(pageName).getItems();
+		}
+		catch (PageNotFoundException ex) { /*silent*/ }
+		
+		return ret;
 	}
 	
 	
@@ -92,20 +99,34 @@ public class PageHandler {
 		throw(new PageNotFoundException());
 	}
 	
-	public void renamePageByName(String oldName, String newName) throws PageNotFoundException, PageNameAlreadyExistsException {
-		Page p = this.getPageByName(oldName);
-		/*
+	public void renamePageByName(String oldName, String newName) {
+		Page p = null;
+		
 		try {
-			p = this.getPageByName(oldName);
+		  p = this.getPageByName(oldName);
 		}
-		catch (PageNotFoundException ex) {
-			throw(ex);
-		}*/
+		catch (PageNotFoundException ex) { /*silent*/ }
+
+        if(p == null)
+        	return;
 
 		if (this.containsPageByName(newName))
-			throw(new PageNameAlreadyExistsException());
+			return;
 		
 		p.setName(newName);
+	}
+	
+	public boolean containsItemInPageByNameAndUnit(String name, Units unit, String pageName)
+	{
+		Page p = null;
+		try {
+	    p = getPageByName(pageName);
+		}
+		catch (PageNotFoundException ex) { 
+			return false; 
+			}
+
+	    return p.containsItemByNameAndUnit(name, unit);
 	}
 	
 }

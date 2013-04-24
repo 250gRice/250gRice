@@ -15,31 +15,38 @@ public class Page {
 		this.name = name;
 	}
 	
-	public void addItem(Item toAdd) {
-		Item toSearch = null;
-		try {
-			toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
-		} catch (ItemNotFoundException e) {
-			items.add(toAdd.clone());
-			return;
-		}
-		
-		toSearch.addValue(toAdd.getValue());
+	public boolean containsItemByNameAndUnit(String name, Units unit)
+	{
+		for(Item item : items)
+	        if(item.getName() == name && item.getUnit() == unit)
+	            return true;
+		return false;
 	}
 	
-	public Item getItemByNameAndUnit(String name, Units unit) throws ItemNotFoundException{
+	public void addItem(Item toAdd) {
+		Item toSearch = null;
+        toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
+
+        if(toSearch == null)
+	      items.add(toAdd.clone());
+        else
+		  toSearch.addValue(toAdd.getValue());
+	}
+	
+	public Item getItemByNameAndUnit(String name, Units unit) {
 	    for(Item item : items)
 	        if(item.getName() == name && item.getUnit() == unit)
 	            return item;
-		
-	    throw(new ItemNotFoundException());
+        return null;
 	}
 	
-	public void removeItemByNameAndUnit(String name, Units unit) throws ItemNotFoundException{
+	public void removeItemByNameAndUnit(String name, Units unit) {
 		
-		Item i = getItemByNameAndUnit(name, unit);
+		Item i = null;
+		i = getItemByNameAndUnit(name, unit);
 		
-		items.remove(i);
+		if(i != null)
+		  items.remove(i);
 	}
 	
 	@Override
