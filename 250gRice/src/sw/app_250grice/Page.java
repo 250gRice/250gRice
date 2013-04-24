@@ -9,6 +9,7 @@ public class Page {
 	
 	String name;
 	List<Item> items;
+	Boolean doodl;
 	
 	public Page(String name) {
 		items = new ArrayList<Item>();
