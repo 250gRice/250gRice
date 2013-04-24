@@ -9,7 +9,6 @@ public class Page {
 	
 	String name;
 	List<Item> items;
-	Boolean doodl;
 	
 	public Page(String name) {
 		items = new ArrayList<Item>();
@@ -21,7 +20,7 @@ public class Page {
 		try {
 			toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
 		} catch (ItemNotFoundException e) {
-			items.add(toAdd.clone()123);
+			items.add(toAdd.clone());
 			return;
 		}
 		
