@@ -29,7 +29,7 @@ public class Page {
 	}
 	
 	public void doNothin(){
-	
+		// did something useful
 	}
 	
 	public Item getItemByNameAndUnit(String name, Units unit) throws ItemNotFoundException{
