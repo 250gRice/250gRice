@@ -39,7 +39,10 @@ public class Page {
         toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
 
         if(toSearch == null)
+        {
+          toAdd.setPage(name);
 	      items.add(toAdd.clone());
+        }
         else
 		  toSearch.addValue(toAdd.getValue());
 	}

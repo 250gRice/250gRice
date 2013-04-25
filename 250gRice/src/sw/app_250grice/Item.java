@@ -23,27 +23,35 @@ public class Item {
 	private Units unit;
 		
 	@DatabaseField(foreign = true, canBeNull = false, columnName = PAGE_FIELD_NAME)
-	private Page page = null;
+	private String pageName;
 
 	
 	public Item() {
 
 	}	
 	
-	public Item(String name, double value, Page page) {
+	public Item(String name, double value, String pageName) {
 		this.name = name;
 		this.value = value;
 		this.unit = Units.NONE;
-		this.page = page;
+		this.pageName = pageName;
 	}
 	
 
-	public Item(String name, double value, Units unit, Page page) {
+	public Item(String name, double value, Units unit, String pageName) {
 		super();
 		this.name = name;
 		this.value = value;
 		this.unit = unit;
-		this.page = page;
+		this.pageName = pageName;
+	}
+	
+	public Item(String name, double value) {
+		this(name, value, "");		
+	}
+	
+	public Item(String name, double value, Units unit) {
+		this(name, value, unit, "");
 	}
 
 
@@ -66,9 +74,13 @@ public class Item {
 	}
 	
 	public Item clone() {
-		Item i = new Item(this.name, this.value, this.unit, this.page);
+		Item i = new Item(this.name, this.value, this.unit, this.pageName);
 		
 		return i;
+	}
+	
+	public void setPage(String name) {
+		this.pageName = name;
 	}
 
 
@@ -92,7 +104,7 @@ public class Item {
 		
 		Item item = (Item)obj;
 		
-		return (this.name == item.name) && (this.value == item.value) && (this.unit == item.unit) && (this.page == item.page);
+		return (this.name.equals(item.name)) && (this.value == item.value) && (this.unit == item.unit);
 	}
 	
 	public void addValue(double toAdd) {
