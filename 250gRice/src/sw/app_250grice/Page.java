@@ -40,7 +40,7 @@ public class Page {
 
         if(toSearch == null)
         {
-          toAdd.setPage(name);
+          toAdd.setPageName(name);
 	      items.add(toAdd.clone());
         }
         else

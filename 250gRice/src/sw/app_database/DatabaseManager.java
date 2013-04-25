@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sw.app_250grice.*;
+import sw.exceptions.ItemNotFoundException;
 
 import java.sql.SQLException;
 import android.util.Log;
@@ -27,9 +28,9 @@ public class DatabaseManager {
 	// ----------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------
 	// ITEMS
-	public List<Item> getItems() {
+	public List<Item> getItemsByPageName(String pageName) {
 		try {
-			return this.itemDao.queryForAll();
+			return this.itemDao.queryForEq(Item.PAGE_FIELD_NAME, pageName);
 		} catch (SQLException e) {
 			Log.e(LOG_TAG, "Unable to load from database: " + e.getMessage());
 			e.printStackTrace();

@@ -22,7 +22,7 @@ public class Item {
 	@DatabaseField(canBeNull = false, columnName = "unit")
 	private Units unit;
 		
-	@DatabaseField(foreign = true, canBeNull = false, columnName = PAGE_FIELD_NAME)
+	@DatabaseField(canBeNull = false, columnName = PAGE_FIELD_NAME)
 	private String pageName;
 
 	
@@ -79,7 +79,7 @@ public class Item {
 		return i;
 	}
 	
-	public void setPage(String name) {
+	public void setPageName(String name) {
 		this.pageName = name;
 	}
 

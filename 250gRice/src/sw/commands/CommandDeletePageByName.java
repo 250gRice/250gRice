@@ -1,4 +1,7 @@
-package sw.app_250grice;
+package sw.commands;
+
+import sw.app_250grice.PageHandler;
+import sw.exceptions.PageNotFoundException;
 
 public class CommandDeletePageByName implements ICommand {
 

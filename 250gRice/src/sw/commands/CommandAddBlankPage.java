@@ -1,4 +1,7 @@
-package sw.app_250grice;
+package sw.commands;
+
+import sw.app_250grice.PageHandler;
+import sw.exceptions.PageNameAlreadyExistsException;
 
 public class CommandAddBlankPage implements ICommand {
 	

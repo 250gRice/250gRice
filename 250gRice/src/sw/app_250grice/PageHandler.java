@@ -3,11 +3,13 @@ package sw.app_250grice;
 import java.util.ArrayList;
 import java.util.List;
 
+import sw.exceptions.PageNotFoundException;
+
 public class PageHandler {
 	
 	private static PageHandler singletonPageHandler;
 	private List<Page> pages;
-		
+	
 	private PageHandler(){
 		pages = new ArrayList<Page>();		
 	}

@@ -1,4 +1,4 @@
-package sw.app_250grice;
+package sw.commands;
 
 public interface ICommand {
 	
