@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sw.app_250grice.*;
-import sw.exceptions.ItemNotFoundException;
 
 import java.sql.SQLException;
 import android.util.Log;

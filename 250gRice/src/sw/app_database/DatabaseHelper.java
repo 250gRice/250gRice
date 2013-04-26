@@ -11,6 +11,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	private static final String dbName = "database.db";
@@ -20,7 +21,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private Dao<Item, String> itemDao = null;
 	private Dao<Page, String> pageDao = null;
 
-	public DatabaseHelper(Context context) {
+	public DatabaseHelper(Context context, SQLiteDatabase db) {
+		super(context, dbName, null, dbVersion);
+		try {
+			TableUtils.dropTable(connectionSource, Item.class, true);
+			TableUtils.dropTable(connectionSource, Page.class, true);
+			onCreate(db, connectionSource);
+					
+		} catch (Exception e) {
+			Log.e(DatabaseHelper.class.getName(), "Can't clear Tables", e);
+		}
+	}	public DatabaseHelper(Context context) {
 		super(context, dbName, null, dbVersion);
 	}
 
@@ -41,7 +52,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			TableUtils.dropTable(connectionSource, Item.class, true);
 			TableUtils.dropTable(connectionSource, Page.class, true);
-			onCreate(db);
+			onCreate(db, connectionSource);
 		} catch (SQLException e) {
 			Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
 			throw new RuntimeException(e);

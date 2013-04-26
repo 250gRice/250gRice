@@ -1,11 +1,13 @@
 package sw.app_250grice;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
@@ -14,7 +16,8 @@ public class Page {
     @DatabaseField(id = true)
 	String name;
     
-	List<Item> items;
+    @ForeignCollectionField(columnName = "itemList")
+	Collection<Item> items;
 	
 	
 	public Page() {
@@ -22,6 +25,7 @@ public class Page {
 	}
 	
 	public Page(String name) {
+		
 		items = new ArrayList<Item>();
 		this.name = name;
 	}
@@ -40,7 +44,6 @@ public class Page {
 
         if(toSearch == null)
         {
-          toAdd.setPageName(name);
 	      items.add(toAdd.clone());
         }
         else

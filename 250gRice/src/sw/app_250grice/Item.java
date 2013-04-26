@@ -22,15 +22,15 @@ public class Item {
 	@DatabaseField(canBeNull = false, columnName = "unit")
 	private Units unit;
 		
-	@DatabaseField(canBeNull = false, columnName = PAGE_FIELD_NAME)
-	private String pageName;
+	@DatabaseField(foreign = true, canBeNull = false, columnName = PAGE_FIELD_NAME)
+	private Page pageName;
 
 	
 	public Item() {
 
 	}	
 	
-	public Item(String name, double value, String pageName) {
+	public Item(String name, double value, Page pageName) {
 		this.name = name;
 		this.value = value;
 		this.unit = Units.NONE;
@@ -38,7 +38,7 @@ public class Item {
 	}
 	
 
-	public Item(String name, double value, Units unit, String pageName) {
+	public Item(String name, double value, Units unit, Page pageName) {
 		super();
 		this.name = name;
 		this.value = value;
@@ -46,13 +46,13 @@ public class Item {
 		this.pageName = pageName;
 	}
 	
-	public Item(String name, double value) {
-		this(name, value, "");		
-	}
-	
-	public Item(String name, double value, Units unit) {
-		this(name, value, unit, "");
-	}
+//	public Item(String name, double value) {
+//		this(name, value, "");		
+//	}
+//	
+//	public Item(String name, double value, Units unit) {
+//		this(name, value, unit, "");
+//	}
 
 
 	public String getName() {
@@ -79,7 +79,7 @@ public class Item {
 		return i;
 	}
 	
-	public void setPageName(String name) {
+	public void setPage(Page name) {
 		this.pageName = name;
 	}
 
