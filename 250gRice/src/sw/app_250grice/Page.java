@@ -118,6 +118,10 @@ public class Page {
 
 		p.items = getItems();
 		
+		for(Item item : items) {
+			item.setPage(p);
+		}
+		
 		return p;
 	}
 	

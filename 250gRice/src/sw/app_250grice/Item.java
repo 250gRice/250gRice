@@ -68,7 +68,7 @@ public class Item {
 	
 	public Item clone() {
 		Item i = new Item(this.name, this.value, this.unit);
-		
+		i.setPage(page);		
 		return i;
 	}
 
