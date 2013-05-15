@@ -15,7 +15,7 @@ import com.j256.ormlite.table.TableUtils;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	private static final String dbName = "database.db";
-	private static final int dbVersion = 7;
+	private static final int dbVersion = 11;
 	// ------------------------------------------------------------------------------------------------------
 	// DAOs
 	private Dao<Item, String> itemDao = null;
@@ -24,8 +24,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public DatabaseHelper(Context context, SQLiteDatabase db) {
 		super(context, dbName, null, dbVersion);
 		try {
-			TableUtils.dropTable(connectionSource, Item.class, true);
-			TableUtils.dropTable(connectionSource, Page.class, true);
+			//TableUtils.dropTable(connectionSource, Item.class, true);
+			//TableUtils.dropTable(connectionSource, Page.class, true);
 			onCreate(db, connectionSource);
 					
 		} catch (Exception e) {
@@ -84,6 +84,5 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		super.close();
 		this.itemDao = null;
 		this.pageDao = null;
-	}
-	
+	}	
 }

@@ -27,7 +27,7 @@ public class PageHandler {
 	
 	public void addPageExisting(Page page) {
 		if(!containsPageByName(page.name))
-			pages.add(page);			
+			pages.add(page.clone());			
 	}
 	
 	public boolean containsPageByName(String name) {

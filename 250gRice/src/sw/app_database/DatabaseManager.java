@@ -66,7 +66,6 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 		return new ArrayList<Page>();
-
 	}
 
 	public void setPage(Page page) {
@@ -117,4 +116,13 @@ public class DatabaseManager {
 		}
 		return this.pageDao;
 	}
+	
+	public void buildPageHandler() {		
+		PageHandler pageHandler = PageHandler.getPageHandler();
+		List<Page> toAdd = this.getPages();
+		
+		for(Page page : toAdd) {
+			pageHandler.addPageExisting(page);
+	}		
+  }
 }
