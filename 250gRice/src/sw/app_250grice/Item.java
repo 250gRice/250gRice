@@ -8,6 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class Item {
 	
+	
 	public static final String PAGE_FIELD_NAME = "page"; 
 	
 	@DatabaseField(generatedId = true, columnName = "id")
