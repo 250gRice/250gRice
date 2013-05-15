@@ -18,38 +18,39 @@ public class MainActivity extends Activity {
 	DatabaseHelper helper;
 	protected SQLiteDatabase db;
 	PageHandler pageHandler;
+	TextView tv;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 		
-		this.pageHandler = PageHandler.getPageHandler();
+		System.out.println(savedInstanceState);
+		setContentView(R.layout.activity_main);		
 		
-		// DatabaseHelper for first dropping Tables then creating new Tables for Pages and Items
-		this.helper = new DatabaseHelper(getApplicationContext(), db);
-
-		// DatabaseManager for accessing Database contents
-		this.manager = new DatabaseManager(this.helper);
-		
-		
-		
-		this.manager.buildPageHandler();
-		
-		for (Page toShowPage : this.pageHandler.getPages()) {
-			System.out.println("PAGE: " + toShowPage.toString());
-			for(Item toShowItem : toShowPage.getItems() )
-					System.out.println("ITEM: " + toShowItem.toString());
-			
-		}
+		if(savedInstanceState == null)
+			loadData();
 		
 		//createDummyDate();
-		
 				
-		TextView tv = (TextView)this.findViewById(R.id.text_view);
-		tv.setText("250gRice starting...");
-
 	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		tv = (TextView)findViewById(R.id.text_view);
+		String toDisplay = "";
+		tv.setText(toDisplay);
+
+		for (Page toShowPage : this.pageHandler.getPages()) {
+			toDisplay += toShowPage.toString() + "\n";
+			for(Item toShowItem : toShowPage.getItems() )
+				toDisplay+= toShowItem.toString() + "\n";
+			
+		}
+		tv.setText(toDisplay);	
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,9 +76,26 @@ public class MainActivity extends Activity {
 			for(Item toShowItem : toShowPage.getItems() )
 					System.out.println("ITEM: " + toShowItem.toString());
 			
+		}		
+	}
+	
+	private void loadData() {
+		this.pageHandler = PageHandler.getPageHandler();
+		
+		// DatabaseHelper for first dropping Tables then creating new Tables for Pages and Items
+		this.helper = new DatabaseHelper(getApplicationContext(), db);
+
+		// DatabaseManager for accessing Database contents
+		this.manager = new DatabaseManager(this.helper);		
+		
+		this.manager.buildPageHandler();
+		
+		for (Page toShowPage : this.pageHandler.getPages()) {
+			System.out.println("PAGE: " + toShowPage.toString());
+			for(Item toShowItem : toShowPage.getItems() )
+					System.out.println("ITEM: " + toShowItem.toString());
+			
 		}
-		
-		
 	}
 
 }
