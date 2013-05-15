@@ -23,38 +23,27 @@ public class Item {
 	private Units unit;
 		
 	@DatabaseField(foreign = true, canBeNull = false, columnName = PAGE_FIELD_NAME)
-	private Page pageName;
+	private Page page;
 
 	
 	public Item() {
 
 	}	
 	
-	public Item(String name, double value, Page pageName) {
+	public Item(String name, double value) {
 		this.name = name;
 		this.value = value;
 		this.unit = Units.NONE;
-		this.pageName = pageName;
 	}
 	
 
-	public Item(String name, double value, Units unit, Page pageName) {
+	public Item(String name, double value, Units unit) {
 		super();
 		this.name = name;
 		this.value = value;
 		this.unit = unit;
-		this.pageName = pageName;
 	}
 	
-//	public Item(String name, double value) {
-//		this(name, value, "");		
-//	}
-//	
-//	public Item(String name, double value, Units unit) {
-//		this(name, value, unit, "");
-//	}
-
-
 	public String getName() {
 		return name;
 	}
@@ -67,6 +56,10 @@ public class Item {
 	public void setValue(double value) {
 		this.value = value;
 	}
+	
+	public void setPage(Page page) {		
+		this.page = page;
+	}
 
 
 	public Units getUnit() {
@@ -74,15 +67,10 @@ public class Item {
 	}
 	
 	public Item clone() {
-		Item i = new Item(this.name, this.value, this.unit, this.pageName);
+		Item i = new Item(this.name, this.value, this.unit);
 		
 		return i;
 	}
-	
-	public void setPage(Page name) {
-		this.pageName = name;
-	}
-
 
 	@Override 
 	public String toString() { 

@@ -4,9 +4,10 @@ import static org.junit.Assert.*;
 
 
 import sw.app_250grice.Item;
-import sw.app_250grice.ItemNotFoundException;
 import sw.app_250grice.Page;
 import sw.app_250grice.Units;
+import sw.exceptions.ItemNotFoundException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

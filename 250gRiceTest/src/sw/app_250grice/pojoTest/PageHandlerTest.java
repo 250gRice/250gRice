@@ -5,11 +5,8 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import sw.app_250grice.Item;
-import sw.app_250grice.ItemNotFoundException;
 import sw.app_250grice.Page;
 import sw.app_250grice.PageHandler;
-import sw.app_250grice.PageNameAlreadyExistsException;
-import sw.app_250grice.PageNotFoundException;
 import sw.app_250grice.Units;
 import org.junit.After;
 import org.junit.Before;

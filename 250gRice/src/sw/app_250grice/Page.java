@@ -41,10 +41,12 @@ public class Page {
 	public void addItem(Item toAdd) {
 		Item toSearch = null;
         toSearch = getItemByNameAndUnit(toAdd.getName(), toAdd.getUnit());
-
+        Item clonedItem;
         if(toSearch == null)
         {
-	      items.add(toAdd.clone());
+          clonedItem = toAdd.clone();
+          clonedItem.setPage(this);
+	      items.add(clonedItem);
         }
         else
 		  toSearch.addValue(toAdd.getValue());
