@@ -27,10 +27,11 @@ public class MainActivity extends Activity {
 		System.out.println(savedInstanceState);
 		setContentView(R.layout.activity_main);		
 		
+		//first time uncomment this:
+		//createDummyDate();
+		
 		if(savedInstanceState == null)
 			loadData();
-		
-		//createDummyDate();
 				
 	}
 	
@@ -60,6 +61,13 @@ public class MainActivity extends Activity {
 	}
 	
 	private void createDummyDate() {
+				
+		// DatabaseHelper for first dropping Tables then creating new Tables for Pages and Items
+		this.helper = new DatabaseHelper(getApplicationContext(), db);
+
+		// DatabaseManager for accessing Database contents
+		this.manager = new DatabaseManager(this.helper);	
+		
 		Page toAddPage = new Page("P1");
 		Item toAddItem = new Item("Testitem", 12.12, Units.GRAMM);
 		toAddPage.addItem(toAddItem);
