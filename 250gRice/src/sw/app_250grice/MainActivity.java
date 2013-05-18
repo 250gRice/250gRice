@@ -7,8 +7,10 @@ import sw.app_database.*;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -46,6 +48,14 @@ public class MainActivity extends Activity {
 		super.onStart();
 	}
 	
+	View.OnClickListener pageClickHandle = new View.OnClickListener() {
+	    public void onClick(View v) {
+	    	// it was the 1st button
+	    	Intent pageIntent = new Intent(getApplicationContext(), PageActivity.class);
+	    	startActivity(pageIntent);
+	    }
+	};
+	
 	private ScrollView createView(){
 		List<Page> pages = pageHandler.getPages();
 		
@@ -59,7 +69,7 @@ public class MainActivity extends Activity {
 			for(Page page: pages){
 				List<Item> items = page.getItems();				
 				TableLayout pageLayout = (TableLayout) getLayoutInflater().inflate(R.layout.overview_page_layout, null);
-				//pageLayout.setOnClickListener(pageClickHandle);
+				pageLayout.setOnClickListener(pageClickHandle);
 				
 				
 				for(Item item: items){
