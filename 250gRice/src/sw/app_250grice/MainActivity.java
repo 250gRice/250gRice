@@ -1,5 +1,6 @@
 package sw.app_250grice;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import sw.app_database.*;
@@ -8,6 +9,10 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -24,34 +29,63 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		System.out.println(savedInstanceState);
-		setContentView(R.layout.activity_main);		
+		
 		
 		//first time uncomment this:
 		//createDummyDate();
 		
 		if(savedInstanceState == null)
 			loadData();
-				
+		
+		//setContentView(R.layout.activity_main);
+		setContentView(createView());
 	}
 	
 	@Override
 	public void onStart() {
 		super.onStart();
-		
-		tv = (TextView)findViewById(R.id.text_view);
-		String toDisplay = "";
-		tv.setText(toDisplay);
-
-		for (Page toShowPage : this.pageHandler.getPages()) {
-			toDisplay += toShowPage.toString() + "\n";
-			for(Item toShowItem : toShowPage.getItems() )
-				toDisplay+= toShowItem.toString() + "\n";
-			
-		}
-		tv.setText(toDisplay);	
 	}
 	
+	private ScrollView createView(){
+		List<Page> pages = pageHandler.getPages();
+		
+		ScrollView scrollView = new ScrollView(this);
+		LinearLayout pageHolder = new LinearLayout(this);
+		pageHolder.setOrientation(LinearLayout.VERTICAL);
+		scrollView.addView(pageHolder);
+		
+		
+		if(!pages.isEmpty())
+			for(Page page: pages){
+				List<Item> items = page.getItems();				
+				TableLayout pageLayout = (TableLayout) getLayoutInflater().inflate(R.layout.overview_page_layout, null);
+				//pageLayout.setOnClickListener(pageClickHandle);
+				
+				
+				for(Item item: items){
+					TableRow itemLayout = new TableRow(this);
+					
+					TextView 	qty =	new TextView(this),
+								name =	new TextView(this);
+					
+					DecimalFormat f = new DecimalFormat("#0.00 ");
+					String value = f.format(item.getValue());
+					qty.setText(value+item.getUnit().toString());
+					qty.setPadding(15, 15, 0, 0);
+					
+					name.setText(item.getName());
+					name.setPadding(15, 15, 15, 0);
+					
+					itemLayout.addView(qty);
+					itemLayout.addView(name);					
+					
+					pageLayout.addView(itemLayout);
+				}
+				pageHolder.addView(pageLayout);
+			}
+		
+		return scrollView;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
