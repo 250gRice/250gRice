@@ -13,8 +13,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class Page {
 	
-	@DatabaseField(generatedId = true, columnName = "id")
-	int id;
+	@DatabaseField(id = true, columnName = "id")
+	Integer id;
 	
     @DatabaseField(columnName = "pageName")
 	String name;
@@ -27,6 +27,15 @@ public class Page {
 		
 	}
 	
+	public Integer getId() {
+		
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public Page(String name) {
 		
 		items = new ArrayList<Item>();
@@ -120,6 +129,7 @@ public class Page {
 		Page p = new Page(this.name);
 
 		p.items = getItems();
+		p.id = getId();
 		
 		for(Item item : items) {
 			item.setPage(p);

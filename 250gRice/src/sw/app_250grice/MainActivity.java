@@ -35,11 +35,14 @@ public class MainActivity extends Activity {
 		
 		
 		//first time uncomment this:
-		//createDummyDate();
+		//createDummyData();
 		
 		if(savedInstanceState == null)
 			loadData();
 		
+		this.pageHandler = pageHandler.getPageHandler();
+		this.pageHandler.setCurrentPageIndex();
+
 		//setContentView(R.layout.activity_main);
 		setContentView(createView());
 	}
@@ -53,12 +56,16 @@ public class MainActivity extends Activity {
 	    public void onClick(View v) {
 	    	
 	    	Intent pageIntent = new Intent(getApplicationContext(), PageActivity.class);
+	    	
 	    	pageIntent.putExtra(PAGEID, v.getId());
+
+
 	    	startActivity(pageIntent);
 	    }
 	};
 	
 	private ScrollView createView(){
+
 		List<Page> pages = pageHandler.getPages();
 		
 		ScrollView scrollView = new ScrollView(this);
@@ -74,15 +81,18 @@ public class MainActivity extends Activity {
 				List<Item> items = page.getItems();
 				TableLayout pageLayout = (TableLayout) getLayoutInflater().inflate(R.layout.overview_page_layout, null);
 				pageLayout.setOnClickListener(pageClickHandle);
-				pageLayout.setId(++i);
-				
-				
+
+				System.out.println("doooh");
+				System.out.println("id: " + page.getId().toString());
+				pageLayout.setId(page.getId().intValue());
+
 				for(Item item: items){
+
 					TableRow itemLayout = new TableRow(this);
 					
 					TextView 	qty =	new TextView(this),
 								name =	new TextView(this);
-					
+
 					DecimalFormat f = new DecimalFormat("#0.00 ");
 					String value = f.format(item.getValue());
 					qty.setText(value+item.getUnit().toString());
@@ -90,7 +100,7 @@ public class MainActivity extends Activity {
 					
 					name.setText(item.getName());
 					name.setPadding(15, 15, 15, 0);
-					
+
 					itemLayout.addView(qty);
 					itemLayout.addView(name);					
 					
@@ -115,31 +125,39 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	private void createDummyDate() {
-				
+	private void createDummyData() {
+		this.pageHandler = PageHandler.getPageHandler();	
+		this.pageHandler.setCurrentPageIndex();
 		// DatabaseHelper for first dropping Tables then creating new Tables for Pages and Items
 		this.helper = new DatabaseHelper(getApplicationContext(), db);
 
 		// DatabaseManager for accessing Database contents
 		this.manager = new DatabaseManager(this.helper);	
+
+		this.helper.dropDataBase();
+
+		this.pageHandler.addPageBlank("Page_1");
+		this.pageHandler.addPageBlank("Page_2");	
+		this.pageHandler.addPageBlank("Page_3");
 		
-		Page toAddPage = new Page("P1");
-		Item toAddItem = new Item("Testitem", 12.12, Units.GRAMM);
-		toAddPage.addItem(toAddItem);
-		toAddItem = new Item("Testitem2", 4.3);
-		toAddPage.addItem(toAddItem);
 		
-		this.manager.setPage(toAddPage);
-		for(Item items : toAddPage.getItems())
-			this.manager.setItem(items);
+		Item toAdd = new Item("item_1", 10);
+		this.pageHandler.addItemToPageByName(toAdd, "Page_1");
+		toAdd = new Item("item_2", 1);
+		this.pageHandler.addItemToPageByName(toAdd, "Page_1");
+		toAdd = new Item("item_3", 2.3, Units.GRAMM);
+		this.pageHandler.addItemToPageByName(toAdd, "Page_1");
+		this.pageHandler.addItemToPageByName(toAdd, "Page_3");
 		
-		listPage = this.manager.getPages();
-		for (Page toShowPage : listPage) {
-			System.out.println("PAGE: " + toShowPage.toString());
-			for(Item toShowItem : toShowPage.getItems() )
-					System.out.println("ITEM: " + toShowItem.toString());
-			
-		}		
+		saveData();
+		this.pageHandler.removAllPages();
+	}
+	
+	private void saveData() {
+		// DatabaseManager for accessing Database contents
+		this.manager = new DatabaseManager(this.helper);
+		
+		this.manager.storePageHandler();
 	}
 	
 	private void loadData() {

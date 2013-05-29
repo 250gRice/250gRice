@@ -119,10 +119,22 @@ public class DatabaseManager {
 	
 	public void buildPageHandler() {		
 		PageHandler pageHandler = PageHandler.getPageHandler();
+		pageHandler.removAllPages();
 		List<Page> toAdd = this.getPages();
 		
 		for(Page page : toAdd) {
 			pageHandler.addPageExisting(page);
 	}		
   }
+	
+	public void storePageHandler() {
+		PageHandler pageHandler = PageHandler.getPageHandler();
+
+		for(Page page : pageHandler.getPages())
+		{
+			this.setPage(page);
+			for(Item item : page.getItems())
+				this.setItem(item);
+		}
+	}
 }

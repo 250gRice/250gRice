@@ -15,7 +15,7 @@ import com.j256.ormlite.table.TableUtils;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	private static final String dbName = "database.db";
-	private static final int dbVersion = 11;
+	private static final int dbVersion = 14;
 	// ------------------------------------------------------------------------------------------------------
 	// DAOs
 	private Dao<Item, String> itemDao = null;
@@ -53,6 +53,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, Item.class, true);
 			TableUtils.dropTable(connectionSource, Page.class, true);
 			onCreate(db, connectionSource);
+		} catch (SQLException e) {
+			Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void dropDataBase() {
+		try {
+			TableUtils.dropTable(connectionSource, Item.class, true);
+			TableUtils.dropTable(connectionSource, Page.class, true);
 		} catch (SQLException e) {
 			Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
 			throw new RuntimeException(e);

@@ -1,14 +1,31 @@
 package sw.app_250grice;
 
+import java.text.DecimalFormat;
+import java.util.List;
+
+import sw.app_database.DatabaseHelper;
+import sw.app_database.DatabaseManager;
+import sw.exceptions.PageNotFoundException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 
 public class PageActivity extends Activity {
+	
+	public final static String PAGEID = "sw.app_250grice.PAGEID";
+	PageHandler pageHandler;
+	Page currentPage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +33,55 @@ public class PageActivity extends Activity {
 		setContentView(R.layout.activity_page);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		pageHandler = PageHandler.getPageHandler();
+		
+		Intent intent = getIntent();
+		int pageId = intent.getIntExtra(PAGEID, -1);
+		
+		try {
+			currentPage = pageHandler.getPageById(pageId);
+		} catch (PageNotFoundException e) {
+			System.err.println("ERRORERRORERRORERRORERRORERRORERRORERRORERRORERRORERRORERRORERRORERRORERRORERROR" + pageId);
+			e.printStackTrace();
+			return;
+		}
+		
+		setContentView(createView());
 	}
+	
+	
+	private TableLayout createView(){
+		
+		List<Item> items = currentPage.getItems();
+		TableLayout pageLayout = (TableLayout) getLayoutInflater().inflate(R.layout.overview_page_layout, null);
+		
+		System.out.println(items.size());
+		
+		for(Item item: items){
+			TableRow itemLayout = new TableRow(this);
+			
+			TextView 	qty =	new TextView(this),
+						name =	new TextView(this);
+			
+			DecimalFormat f = new DecimalFormat("#0.00 ");
+			String value = f.format(item.getValue());
+			qty.setText(value+item.getUnit().toString());
+			qty.setPadding(15, 15, 0, 0);
+			
+			name.setText(item.getName());
+			name.setPadding(15, 15, 15, 0);
+			
+			itemLayout.addView(qty);
+			itemLayout.addView(name);					
+			
+			pageLayout.addView(itemLayout);
+		}
+
+		return pageLayout;
+	
+	}
+
 
 	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.

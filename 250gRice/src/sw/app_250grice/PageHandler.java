@@ -9,6 +9,7 @@ public class PageHandler {
 	
 	private static PageHandler singletonPageHandler;
 	private List<Page> pages;
+	private Integer currentPageIndex;
 	
 	private PageHandler(){
 		pages = new ArrayList<Page>();		
@@ -22,13 +23,40 @@ public class PageHandler {
 	
 	public void addPageBlank(String name) {
 		if(!containsPageByName(name))
-			pages.add(new Page(name));			
+			this.addPage(new Page(name));			
 	}
 	
 	public void addPageExisting(Page page) {
 		if(!containsPageByName(page.name))
-			pages.add(page.clone());			
+			this.addPage(page);			
 	}
+	
+	private void addPage(Page page){
+		if(page.getId() == null){
+			currentPageIndex++;
+			page.setId(currentPageIndex);
+		}
+		pages.add(page);
+	}
+	
+	public void setCurrentPageIndex() {
+		if(pages.size() == 0){
+			currentPageIndex = 0;
+			return;
+		}
+		
+		currentPageIndex = getHighestPageIndex();
+	}
+	
+	private Integer getHighestPageIndex() {
+		Integer id = 0;
+		for (Page page : pages)
+			if(page.getId() > id)
+				id = page.getId();
+		
+		return id;
+	}
+
 	
 	public boolean containsPageByName(String name) {
 		try {
@@ -87,17 +115,27 @@ public class PageHandler {
 	
 	
 	public void dispose() {
-		pages.clear();
+		removAllPages();
 		pages = null;
 		singletonPageHandler = null;
 	}
 	
+	public void removAllPages() {
+		pages.clear();		
+	}
 	
 	private Page getPageByName(String name) throws PageNotFoundException{
 		for(Page page : pages)
 			if(page.getName() == name)
 				return page;
 			
+		throw(new PageNotFoundException());
+	}
+	
+	public Page getPageById(int id) throws PageNotFoundException {
+		for(Page page : pages)
+			if(page.getId() == id)
+				return page;
 		throw(new PageNotFoundException());
 	}
 	
