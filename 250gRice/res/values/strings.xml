@@ -6,5 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_page">PageActivity</string>
     <string name="link_to_blank_page">Add new Page</string>
+    <string name="untiled_page">Untitled Page</string>
+    <string name="button_item_add">+</string>
 
 </resources>
