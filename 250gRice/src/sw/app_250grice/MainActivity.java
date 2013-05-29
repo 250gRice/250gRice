@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
+	public final static String PAGEID = "sw.app_250grice.PAGEID";
 	protected List<Item> listItem;
 	protected List<Page> listPage;
 	DatabaseManager manager;
@@ -50,8 +51,9 @@ public class MainActivity extends Activity {
 	
 	View.OnClickListener pageClickHandle = new View.OnClickListener() {
 	    public void onClick(View v) {
-	    	// it was the 1st button
+	    	
 	    	Intent pageIntent = new Intent(getApplicationContext(), PageActivity.class);
+	    	pageIntent.putExtra(PAGEID, v.getId());
 	    	startActivity(pageIntent);
 	    }
 	};
@@ -62,14 +64,17 @@ public class MainActivity extends Activity {
 		ScrollView scrollView = new ScrollView(this);
 		LinearLayout pageHolder = new LinearLayout(this);
 		pageHolder.setOrientation(LinearLayout.VERTICAL);
-		scrollView.addView(pageHolder);
+		scrollView.addView(pageHolder);		
 		
 		
+		// Build all pages, which are currently in the Database
 		if(!pages.isEmpty())
 			for(Page page: pages){
-				List<Item> items = page.getItems();				
+				int i = 0;
+				List<Item> items = page.getItems();
 				TableLayout pageLayout = (TableLayout) getLayoutInflater().inflate(R.layout.overview_page_layout, null);
 				pageLayout.setOnClickListener(pageClickHandle);
+				pageLayout.setId(++i);
 				
 				
 				for(Item item: items){
@@ -93,6 +98,12 @@ public class MainActivity extends Activity {
 				}
 				pageHolder.addView(pageLayout);
 			}
+		
+		// Add a Link to new Page
+		LinearLayout newPageLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.link_to_blank, null);
+		newPageLayout.setOnClickListener(pageClickHandle);
+		pageHolder.addView(newPageLayout);
+		
 		
 		return scrollView;
 	}

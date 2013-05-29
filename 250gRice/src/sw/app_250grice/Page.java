@@ -16,6 +16,8 @@ public class Page {
     @DatabaseField(id = true)
 	String name;
     
+    int id;
+    
     @ForeignCollectionField(columnName = "itemList")
 	Collection<Item> items;
 	
