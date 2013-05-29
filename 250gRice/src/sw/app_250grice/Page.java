@@ -13,10 +13,11 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class Page {
 	
-    @DatabaseField(id = true)
+	@DatabaseField(generatedId = true, columnName = "id")
+	int id;
+	
+    @DatabaseField(columnName = "pageName")
 	String name;
-    
-    int id;
     
     @ForeignCollectionField(columnName = "itemList")
 	Collection<Item> items;
